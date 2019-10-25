@@ -1,0 +1,36 @@
+<div class="row">
+    <div class="col">
+        <h4 class="border-bottom pb-2 mb-4">Customer</h4>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-6">        
+        <form novalidate [formGroup]="frm" (ngSubmit)="onSubmit()">
+            <mat-form-field class="d-block">
+                <input matInput formControlName="name" placeholder="Full Name" mat-auto-size>
+                <mat-error *ngIf="f.name?.errors?.required">{{vm.required}}</mat-error>
+                <mat-error *ngIf="f.name?.errors?.minlength">{{vm.minLength}}</mat-error>
+            </mat-form-field>
+            <mat-form-field class="d-block">
+                <input matInput formControlName="address" placeholder="Address" mat-auto-size>
+                <mat-error *ngIf="f.address?.errors?.required">{{vm.required}}</mat-error>
+                <mat-error *ngIf="f.address?.errors?.minlength">{{vm.minLength}}</mat-error>
+            </mat-form-field>
+            <mat-form-field class="d-block">
+                <input matInput formControlName="mobile" placeholder="Mobile" mat-auto-size>
+                <mat-error *ngIf="f.mobile?.errors?.required">{{vm.required}}</mat-error>
+                <mat-error *ngIf="f.mobile?.errors?.minlength">{{vm.minLength}}</mat-error>
+            </mat-form-field>
+            <mat-form-field class="d-block">
+                <input matInput formControlName="email" placeholder="Email" mat-auto-size>
+                <mat-error *ngIf="f.email?.errors?.required">{{vm.required}}</mat-error>
+                <mat-error *ngIf="f.email?.errors?.minlength">{{vm.minLength}}</mat-error>
+            </mat-form-field>
+            <button mat-raised-button color="primary" class="mr-1" [disabled]="frm.invalid">Submit</button>
+            <button mat-raised-button type="reset">Reset</button>
+        </form>
+    </div>
+    <div class="col-sm-6">
+        <pre><code>{{frm.value | json}}</code></pre>
+    </div>
+</div>
