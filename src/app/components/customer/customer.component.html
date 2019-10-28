@@ -1,36 +1,84 @@
 <div class="row">
     <div class="col">
-        <h4 class="border-bottom pb-2 mb-4">Customer</h4>
+        <h5 class="text-muted pb-2">{{ id === 0 ? 'New' : 'Edit' }} Customer</h5>
     </div>
 </div>
 <div class="row">
-    <div class="col-sm-6">        
-        <form novalidate [formGroup]="frm" (ngSubmit)="onSubmit()">
-            <mat-form-field class="d-block">
-                <input matInput formControlName="name" placeholder="Full Name" mat-auto-size>
-                <mat-error *ngIf="f.name?.errors?.required">{{vm.required}}</mat-error>
-                <mat-error *ngIf="f.name?.errors?.minlength">{{vm.minLength}}</mat-error>
-            </mat-form-field>
-            <mat-form-field class="d-block">
-                <input matInput formControlName="address" placeholder="Address" mat-auto-size>
-                <mat-error *ngIf="f.address?.errors?.required">{{vm.required}}</mat-error>
-                <mat-error *ngIf="f.address?.errors?.minlength">{{vm.minLength}}</mat-error>
-            </mat-form-field>
-            <mat-form-field class="d-block">
-                <input matInput formControlName="mobile" placeholder="Mobile" mat-auto-size>
-                <mat-error *ngIf="f.mobile?.errors?.required">{{vm.required}}</mat-error>
-                <mat-error *ngIf="f.mobile?.errors?.minlength">{{vm.minLength}}</mat-error>
-            </mat-form-field>
-            <mat-form-field class="d-block">
-                <input matInput formControlName="email" placeholder="Email" mat-auto-size>
-                <mat-error *ngIf="f.email?.errors?.required">{{vm.required}}</mat-error>
-                <mat-error *ngIf="f.email?.errors?.minlength">{{vm.minLength}}</mat-error>
-            </mat-form-field>
-            <button mat-raised-button color="primary" class="mr-1" [disabled]="frm.invalid">Submit</button>
-            <button mat-raised-button type="reset">Reset</button>
+    <div class="col-sm-8">
+        <form novalidate [formGroup]="frm" (ngSubmit)="onSubmit()" #frmElement="ngForm">
+            <mat-card>
+                <!-- name -->
+                <mat-form-field class="d-block mb-2">
+                    <input matInput formControlName="name" placeholder="Full Name" mat-auto-size>
+                    <mat-error *ngIf="f.name?.errors?.required">{{vm.required}}</mat-error>
+                    <mat-error *ngIf="f.name?.errors?.minlength">{{vm.minLength}}</mat-error>
+                </mat-form-field>
+
+                <!-- gender -->
+                <mat-radio-group class="d-block mb-2" formControlName="gender">
+                    <mat-radio-button value="Male" class="mr-2">Male</mat-radio-button>
+                    <mat-radio-button value="Female">Female</mat-radio-button>
+                </mat-radio-group>
+
+                <!-- dob -->
+                <mat-form-field>
+                    <input matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" placeholder="Date of Birth" formControlName="dateOfBirth">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+
+                <!-- address -->
+                <mat-form-field class="d-block mb-2">
+                    <input matInput formControlName="city" placeholder="City" mat-auto-size>
+                    <mat-error *ngIf="f.city?.errors?.required">{{vm.required}}</mat-error>
+                    <mat-error *ngIf="f.city?.errors?.minlength">{{vm.minLength}}</mat-error>
+                </mat-form-field>
+                <mat-form-field class="d-block mb-2">
+                    <input matInput formControlName="state" placeholder="State" mat-auto-size>
+                    <mat-error *ngIf="f.state?.errors?.required">{{vm.required}}</mat-error>
+                    <mat-error *ngIf="f.state?.errors?.minlength">{{vm.minLength}}</mat-error>
+                </mat-form-field>
+                <mat-form-field class="d-block mb-2">
+                    <input matInput formControlName="country" placeholder="Country" mat-auto-size>
+                    <mat-error *ngIf="f.country?.errors?.required">{{vm.required}}</mat-error>
+                    <mat-error *ngIf="f.country?.errors?.minlength">{{vm.minLength}}</mat-error>
+                </mat-form-field>
+                <mat-form-field class="d-block mb-2">
+                    <input matInput formControlName="pinCode" placeholder="Pin Code" mat-auto-size>
+                    <mat-error *ngIf="f.pinCode?.errors?.required">{{vm.required}}</mat-error>
+                    <mat-error *ngIf="f.pinCode?.errors?.minlength">{{vm.minLength}}</mat-error>
+                </mat-form-field>
+
+                <!-- mobile -->
+                <mat-form-field class="d-block mb-2">
+                    <input matInput formControlName="mobile" placeholder="Mobile" mat-auto-size maxlength="10">
+                    <mat-error *ngIf="f.mobile?.errors?.required">{{vm.required}}</mat-error>                    
+                    <mat-error *ngIf="f.mobile?.errors?.pattern">{{vm.mobile}}</mat-error>
+                </mat-form-field>
+
+                <!-- email -->
+                <mat-form-field class="d-block mb-2">
+                    <input matInput formControlName="email" placeholder="Email" mat-auto-size>
+                    <mat-error *ngIf="f.email?.errors?.required">{{vm.required}}</mat-error>
+                    <mat-error *ngIf="f.email?.errors?.email">{{vm.email}}</mat-error>
+                </mat-form-field>
+
+                <!-- notification -->
+                <div class="mb-2">
+                    <div class="pb-2">Notification</div>
+                    <mat-checkbox class="mr-2" *ngFor="let item of ['SMS', 'Email', 'Call']" [value]="item" (change)="onNotificationChange($event)">{{item}}</mat-checkbox>
+                </div>
+
+                <!-- action buttons -->
+                <mat-card-actions>
+                    <button mat-raised-button color="primary" class="mr-1">Submit</button>
+                    <button mat-raised-button type="reset" class="mr-1">Reset</button>
+                    <a mat-raised-button class="float-right" [routerLink]="['/customer/list']">Back</a>
+                </mat-card-actions>
+            </mat-card>
         </form>
     </div>
-    <div class="col-sm-6">
+    <div class="col-sm-4">
         <pre><code>{{frm.value | json}}</code></pre>
     </div>
 </div>

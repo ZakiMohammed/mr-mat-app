@@ -12,6 +12,8 @@ import { HomeComponent } from './components/home/home.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 import { CustomerComponent } from './components/customer/customer.component';
 import { CustomerListComponent } from './components/customer-list/customer-list.component';
+import { DeleteDialogComponent } from './dialog/delete/delete.component';
+import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -19,18 +21,22 @@ import { CustomerListComponent } from './components/customer-list/customer-list.
     HomeComponent,
     NotfoundComponent,
     CustomerComponent,
-    CustomerListComponent
+    CustomerListComponent,
+    DeleteDialogComponent
   ],
+  entryComponents: [DeleteDialogComponent],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    BrowserAnimationsModule,    
+    BrowserAnimationsModule,
     MaterialModule
   ],
-  providers: [],
+  providers: [
+    { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: true } }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

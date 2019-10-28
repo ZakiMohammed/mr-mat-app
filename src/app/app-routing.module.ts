@@ -7,8 +7,8 @@ import { CustomerListComponent } from './components/customer-list/customer-list.
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
-  { path: 'customer-list', component: CustomerListComponent },
-  { path: 'customer', component: CustomerComponent },
+  { path: 'customer/list', component: CustomerListComponent },
+  { path: 'customer/edit/:id', component: CustomerComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: NotfoundComponent }
 ];

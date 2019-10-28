@@ -25,7 +25,7 @@ export class CustomerService {
   }
 
   get(id: number) : Observable<Customer> {
-    return this.http.get(this.url + '/' + id, { headers: this.headers })
+    return this.http.get(this.url + id, { headers: this.headers })
       .pipe(map(response => <Customer>response));
   }
 
@@ -35,11 +35,11 @@ export class CustomerService {
   }
 
   put(id: number, customer: Customer): Observable<Customer> {    
-    return this.http.post(this.url + '/' + id, customer, { headers: this.headers })
+    return this.http.put(this.url + id, customer, { headers: this.headers })
       .pipe(map(response => <Customer>response));
   }
 
   delete(id: number) {    
-    return this.http.delete(this.url + '/' + id, { headers: this.headers });
+    return this.http.delete(this.url + id, { headers: this.headers });
   }
 }
