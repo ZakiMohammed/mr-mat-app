@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CustomerService } from 'src/app/services/customer.service';
-import { Customer } from 'src/app/models/customer';
+import { Customer, Notification } from 'src/app/models/customer';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -23,7 +23,8 @@ export class CustomerComponent implements OnInit {
   };
   minDate: Date = new Date(1950, 0, 1);
   maxDate: Date = new Date();
-  notification: string[] = [];
+  notificationList: Notification[] = [];
+  countries: string[] = [];
 
   @ViewChild("frmElement", { static: true }) frmElement: any;
 
@@ -35,6 +36,12 @@ export class CustomerComponent implements OnInit {
     private router: Router
   ) {
     this.id = +this.route.snapshot.params["id"];
+    this.notificationList = [
+      { name: 'SMS', checked: false },
+      { name: 'Email', checked: false },
+      { name: 'Call', checked: false },
+    ];
+    this.countries = ['India', 'USA', 'Canada', 'UK', 'France'];
     this.customer = new Customer();
     this.initForm();
   }
@@ -63,7 +70,7 @@ export class CustomerComponent implements OnInit {
           this.openSnackBar("Record submitted successfully", "Cool");
           this.frmElement.resetForm();
           this.frm.reset();
-          setTimeout(() => {            
+          setTimeout(() => {
             this.router.navigate(['/customer/list']);
           }, 2000);
         });
@@ -71,7 +78,7 @@ export class CustomerComponent implements OnInit {
         dto.id = this.id;
         this.customerService.put(this.id, dto).subscribe(response => {
           this.openSnackBar("Record updated successfully", "Cool");
-          setTimeout(() => {            
+          setTimeout(() => {
             this.router.navigate(['/customer/list']);
           }, 2000);
         });
@@ -81,18 +88,22 @@ export class CustomerComponent implements OnInit {
     }
   }
 
-  onNotificationChange($event: any) {
-    let value = $event.source.value;
-    let checked = $event.checked;
+  onReset($event: any) {
+    this.notificationList.forEach((item, index) => {
+      this.notificationList[index].checked = false;
+    })
+  }
 
-    if (checked) {
-      this.notification.push(value);
+  onNotificationChange($event: any) {
+    let index = this.notificationList.findIndex(i => i.name === $event.source.value);
+
+    if ($event.checked) {
+      this.notificationList[index].checked = true;
     } else {
-      let index = this.notification.findIndex(i => i === value);
-      this.notification.splice(index);
+      this.notificationList[index].checked = false;      
     }
 
-    this.f.notification.setValue(this.notification.toString());
+    this.f.notification.setValue(this.notificationList.filter(i => i.checked).map(i => i.name).toString());    
   }
 
   initForm(): void {
@@ -106,14 +117,30 @@ export class CustomerComponent implements OnInit {
       email: [this.customer.email, [Validators.required, Validators.email]],
       gender: [this.customer.gender || "Male"],
       dateOfBirth: [this.customer.dateOfBirth, [Validators.required]],
-      notification: ['']
+      notification: [this.customer.notification],
+      workLocationDistance: [this.customer.workLocationDistance],
+      isPrivate: [this.customer.isPrivate]
     });
+
+    if (this.customer.notification.length) {
+      let notifications = this.customer.notification.split(',');
+      this.notificationList.forEach((item, index) => {
+        let found = notifications.find(i => i === item.name);
+        if(found) {
+          this.notificationList[index].checked = true;
+        }
+      });      
+    }
   }
 
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
       duration: 2000,
     });
+  }
+
+  formatLabel(value: number) {
+    return value + 'k';
   }
 
 }

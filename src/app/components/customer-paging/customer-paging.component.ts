@@ -7,16 +7,22 @@ import { DeleteDialogComponent } from 'src/app/dialog/delete/delete.component';
 import { DialogData } from 'src/app/models/dialog-data';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import {merge, Observable, of as observableOf} from 'rxjs';
+import {catchError, map, startWith, switchMap} from 'rxjs/operators';
 
 @Component({
-  selector: 'app-customer-list',
-  templateUrl: './customer-list.component.html',
-  styleUrls: ['./customer-list.component.css']
+  selector: 'app-customer-paging',
+  templateUrl: './customer-paging.component.html',
+  styleUrls: ['./customer-paging.component.css']
 })
-export class CustomerListComponent implements OnInit {
+export class CustomerPagingComponent implements OnInit {
 
   dataSource = new MatTableDataSource<Customer>();
   displayedColumns: string[] = ['id', 'name', 'mobile', 'email', 'action'];
+
+  totalCount = 0;
+  pageSize = 5;
+  loading = true;
 
   @ViewChild('matTableCustomer', { static: true }) matTableCustomer: MatTable<Customer>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -25,19 +31,24 @@ export class CustomerListComponent implements OnInit {
   constructor(
     private customerService: CustomerService,
     public dialog: MatDialog) {
-    // this.displayedColumns = Object.keys(new Customer());
-    // this.displayedColumns.push('action');
   }
 
   ngOnInit() {
-    this.sort.active = 'id';
-    this.sort.direction = 'desc';
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+    merge(this.sort.sortChange, this.paginator.page)
+    .pipe(
+      startWith({}),
+      switchMap(() => {
+        this.loading = true;
+        return this.customerService.getPagination(this.paginator.pageIndex + 1, this.pageSize, this.sort.active, this.sort.direction);
+      }),
+      map((data: any) => {        
+        this.loading = false;
+        this.totalCount = data.totalCount;
 
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-    this.customerService.getAll().subscribe(customers => {
-      this.dataSource.data = customers;
-    });
+        return data.items;
+      })
+    ).subscribe(data => this.dataSource = data);
   }
 
   onDeleteClick($event: any, customer: Customer) {
@@ -56,10 +67,6 @@ export class CustomerListComponent implements OnInit {
         });
       }
     });
-  }
-
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
 }

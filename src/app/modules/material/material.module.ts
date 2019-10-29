@@ -12,6 +12,12 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatMomentDateModule } from "@angular/material-moment-adapter";
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatListModule } from '@angular/material/list';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [],
@@ -28,7 +34,13 @@ import { MatListModule } from '@angular/material/list';
     MatDatepickerModule,
     MatMomentDateModule,
     MatCheckboxModule,
-    MatListModule
+    MatListModule,
+    MatSelectModule,
+    MatSliderModule,
+    MatSlideToggleModule,
+    MatProgressSpinnerModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   exports: [
     MatInputModule,
@@ -42,7 +54,13 @@ import { MatListModule } from '@angular/material/list';
     MatDatepickerModule,
     MatMomentDateModule,
     MatCheckboxModule,
-    MatListModule
+    MatListModule,
+    MatSelectModule,
+    MatSliderModule,
+    MatSlideToggleModule,
+    MatProgressSpinnerModule,
+    MatPaginatorModule,
+    MatSortModule
   ]
 })
 export class MaterialModule { }

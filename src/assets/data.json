@@ -1,18 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { CustomerService } from 'src/app/services/customer.service';
-
-@Component({
-  selector: 'app-notfound',
-  templateUrl: './notfound.component.html',
-  styleUrls: ['./notfound.component.css']
-})
-export class NotfoundComponent implements OnInit {
-
-  constructor(private cs: CustomerService) { }
-
-  ngOnInit() {
-    let customers: any = [
-      {
+[
+    {
         "id": 1,
         "name": "John Marshal",
         "city": "Mumbai",
@@ -26,8 +13,8 @@ export class NotfoundComponent implements OnInit {
         "notification": "Email",
         "workLocationDistance": 42,
         "isPrivate": true
-      },
-      {
+    },
+    {
         "id": 2,
         "name": "Jessica Jones",
         "city": "Mumbai",
@@ -41,8 +28,8 @@ export class NotfoundComponent implements OnInit {
         "notification": "SMS,Email",
         "workLocationDistance": 34,
         "isPrivate": true
-      },
-      {
+    },
+    {
         "id": 3,
         "name": "Allen Green",
         "city": "Mumbai",
@@ -56,8 +43,8 @@ export class NotfoundComponent implements OnInit {
         "notification": "SMS,Email,Call",
         "workLocationDistance": 10,
         "isPrivate": true
-      },
-      {
+    },
+    {
         "id": 4,
         "name": "William Turner",
         "city": "Delhi",
@@ -71,8 +58,8 @@ export class NotfoundComponent implements OnInit {
         "notification": "SMS",
         "workLocationDistance": 4,
         "isPrivate": true
-      },
-      {
+    },
+    {
         "id": 5,
         "name": "Polo Marco",
         "city": "Delhi",
@@ -86,8 +73,8 @@ export class NotfoundComponent implements OnInit {
         "notification": "SMS",
         "workLocationDistance": 24,
         "isPrivate": true
-      },
-      {
+    },
+    {
         "id": 6,
         "name": "Martin Luther",
         "city": "Pune",
@@ -101,8 +88,8 @@ export class NotfoundComponent implements OnInit {
         "notification": "SMS",
         "workLocationDistance": 33,
         "isPrivate": true
-      },
-      {
+    },
+    {
         "id": 7,
         "name": "Harry Potter",
         "city": "Pune",
@@ -116,8 +103,8 @@ export class NotfoundComponent implements OnInit {
         "notification": "SMS",
         "workLocationDistance": 21,
         "isPrivate": true
-      },
-      {
+    },
+    {
         "id": 8,
         "name": "Lilly Rose",
         "city": "Delhi",
@@ -131,8 +118,8 @@ export class NotfoundComponent implements OnInit {
         "notification": "SMS",
         "workLocationDistance": 12,
         "isPrivate": true
-      },
-      {
+    },
+    {
         "id": 9,
         "name": "Tony Stark",
         "city": "Latur",
@@ -146,8 +133,8 @@ export class NotfoundComponent implements OnInit {
         "notification": "SMS",
         "workLocationDistance": 6,
         "isPrivate": true
-      },
-      {
+    },
+    {
         "id": 10,
         "name": "Steve Roger",
         "city": "Nasik",
@@ -161,11 +148,5 @@ export class NotfoundComponent implements OnInit {
         "notification": "SMS",
         "workLocationDistance": 6,
         "isPrivate": true
-      }
-    ];
-    customers.forEach(customer => {
-      this.cs.post(customer).subscribe();
-    })
-  }
-
-}
+    }
+]

@@ -34,3 +34,11 @@ export class Customer {
     }
     
 }
+export class Notification {
+    name: string;
+    checked: boolean;
+    constructor() {
+        this.name = '';
+        this.checked = false;
+    }
+}

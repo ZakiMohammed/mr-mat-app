@@ -24,12 +24,17 @@ export class CustomerService {
       .pipe(map(response => <Customer[]>response));
   }
 
+  getPagination(page: number, size: number, sort: string, order: string): any {
+    return this.http.get(this.url + 
+      `pagination?page=${page}&size=${size}&sort=${sort}&order=${order}`, { headers: this.headers });
+  }
+
   get(id: number) : Observable<Customer> {
     return this.http.get(this.url + id, { headers: this.headers })
       .pipe(map(response => <Customer>response));
   }
 
-  post(customer: Customer): Observable<Customer> {    
+  post(customer): Observable<Customer> {    
     return this.http.post(this.url, customer, { headers: this.headers })
       .pipe(map(response => <Customer>response));
   }

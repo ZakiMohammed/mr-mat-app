@@ -14,6 +14,7 @@ import { CustomerComponent } from './components/customer/customer.component';
 import { CustomerListComponent } from './components/customer-list/customer-list.component';
 import { DeleteDialogComponent } from './dialog/delete/delete.component';
 import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
+import { CustomerPagingComponent } from './components/customer-paging/customer-paging.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
     NotfoundComponent,
     CustomerComponent,
     CustomerListComponent,
-    DeleteDialogComponent
+    DeleteDialogComponent,
+    CustomerPagingComponent
   ],
   entryComponents: [DeleteDialogComponent],
   imports: [
