@@ -50,8 +50,10 @@ export class CustomerListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.customerService.delete(customer.id).subscribe(response => {
-          let index = this.dataSource.data.findIndex(i => i.id === customer.id);
-          this.dataSource.data.splice(index, 1);
+          let dataSource = this.dataSource.data.concat();
+          let index = dataSource.findIndex(i => i.id === customer.id);
+          dataSource.splice(index, 1);          
+          this.dataSource = new MatTableDataSource<Customer>(dataSource);
           this.matTableCustomer.renderRows();
         });
       }

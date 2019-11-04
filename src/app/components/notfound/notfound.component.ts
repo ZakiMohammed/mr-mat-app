@@ -164,6 +164,7 @@ export class NotfoundComponent implements OnInit {
       }
     ];
     customers.forEach(customer => {
+      customer.id = 0;
       this.cs.post(customer).subscribe();
     })
   }
